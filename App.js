@@ -1,19 +1,43 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
-  );
-}
+import {createAppContainer} from 'react-navigation';
+import {createMaterialTopTabNavigator, BottomTabBar} from 'react-navigation-tabs';
+import {createStackNavigator} from 'react-navigation-stack';
+import FirstPage from './screens/HomeScreen';
+import AddScreen from './screens/AddScreen';
+import EditScreen from './screens/EditScreen';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+const TabScreen = createMaterialTopTabNavigator(
+  {
+    Home: { screen: FirstPage },
+    Add : { screen: AddScreen },
+    Edit: { screen: EditScreen }
+  },
+  {
+    tabBarPosition: 'bottom',
+    swipeEnabled: true,
+    animationEnabled: true,
+    tabBarOptions: {
+      activeTintColor: 'blue',
+      inactiveTintColor: 'black',
+      style: {
+        backgroundColor: 'white',
+      },
+      labelStyle: {
+        textAlign: 'center',
+      },
+      indicatorStyle: {
+        borderBottomColor: 'blue',
+        borderBottomWidth: 1.5,
+      },
+    },
+  }
+);
+ 
+//making a StackNavigator to export as default
+const App = createStackNavigator({
+  TabScreen: {
+    screen: TabScreen,
   },
 });
+export default createAppContainer(App);
